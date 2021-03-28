@@ -6,16 +6,13 @@ public class cameraControl : MonoBehaviour
 {
     private Vector3 cameraPos;
     private Transform player, win;
-    private float cameraOffset = 4f; 
-
+    private float cameraOffset = 4f;
      private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-
     }
     void Start()
     {
-
     }
    
     void Update()

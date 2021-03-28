@@ -13,11 +13,13 @@ public class levelTransitionControl : MonoBehaviour
         gameOverUI.enabled = false; 
         if(PlayerPrefs.GetInt("finishLevel") == 0)
         {
-            gameOverUI.enabled = true; 
+            gameOverUI.enabled = true;
+            gameOverUI.GetComponent<AudioSource>().Play();
         }
         else
         {
             nextLevelUI.enabled = true; 
+            nextLevelUI.GetComponent<AudioSource>().Play();
         }
     }
  

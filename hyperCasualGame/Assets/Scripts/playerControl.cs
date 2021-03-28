@@ -11,11 +11,17 @@ public class playerControl : MonoBehaviour
     private bool isInvintable;
     private GameObject fireEffect;
     private int planeCounter;
+    private AudioSource audioSource; 
+    public AudioClip normalBreak;
+    public AudioClip invintableBreak;
+    public AudioClip jump;
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         fireEffect = transform.GetChild(0).gameObject;
         fireEffect.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
         planeCounter = 0;
     }
 
@@ -72,12 +78,16 @@ public class playerControl : MonoBehaviour
     {
         if (!collisionControl)
         {
+            audioSource.clip = jump;
+            audioSource.Play();
             rigidbody.velocity = new Vector3(0, 250 * Time.fixedDeltaTime, 0);
         }
         else
         {
             if (isInvintable)
             {
+                audioSource.clip = invintableBreak;
+                audioSource.Play();
                 if (collision.gameObject.tag == "enemy" || collision.gameObject.tag == "plane")
                 {
                       collision.transform.parent.GetComponent<ObstacleController>().ShatterAllObstacles();
@@ -88,6 +98,8 @@ public class playerControl : MonoBehaviour
             {
                    if (collision.gameObject.tag == "enemy")
                    {
+                       audioSource.clip = normalBreak;
+                       audioSource.Play();
                        collision.transform.parent.GetComponent<ObstacleController>().ShatterAllObstacles();
 
                    }
