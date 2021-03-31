@@ -1,20 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class cameraControl : MonoBehaviour
 {
     private Vector3 cameraPos;
     private Transform player, win;
     private float cameraOffset = 4f;
+ 
      private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    void Start()
-    {
-    }
-   
     void Update()
     {
         if (win == null)
@@ -27,5 +23,7 @@ public class cameraControl : MonoBehaviour
             cameraPos = new Vector3(transform.position.x, player.position.y, transform.position.z);
             transform.position = new Vector3(transform.position.x, cameraPos.y, -5);
         }
+
     }
+
 }

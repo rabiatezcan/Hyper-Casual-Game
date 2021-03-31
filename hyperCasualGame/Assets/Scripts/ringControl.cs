@@ -8,11 +8,12 @@ public class ringControl : MonoBehaviour
     GameObject[] obstaclePrefab = new GameObject[4];
     public GameObject winPrefab;
     GameObject tempObs, tempObs2;
-    private int addNumber = 7;
+    public static int addNumber = 7;
     float speed = 80f;
     public int levelCounter = 1;
+    [HideInInspector]
     const int modelCount = 4;
-    const int totalPartNumber = 4; 
+    const int totalPartNumber = 4;
     void Start()
     {
         levelCounter = PlayerPrefs.GetInt("level");

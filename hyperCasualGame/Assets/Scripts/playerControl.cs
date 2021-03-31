@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class playerControl : MonoBehaviour
 {
     private Rigidbody rigidbody;
@@ -16,6 +16,13 @@ public class playerControl : MonoBehaviour
     public AudioClip invintableBreak;
     public AudioClip jump;
 
+    // UI FEATURES
+    private int breakCounter = 0;
+    private int obstacleCount;
+    public Image fillBackground;
+    public Text currentLevelText;
+    public Text nextLevelText;
+    public Image invintableFill;
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -23,6 +30,10 @@ public class playerControl : MonoBehaviour
         fireEffect.SetActive(false);
         audioSource = GetComponent<AudioSource>();
         planeCounter = 0;
+        currentLevelText.text = "" + PlayerPrefs.GetInt("level");
+        nextLevelText.text = "" + (PlayerPrefs.GetInt("level") + 1);
+        invintableFill.transform.gameObject.SetActive(false); 
+        obstacleCount = ((ringControl.addNumber + PlayerPrefs.GetInt("level")) * 2) + 1;
     }
 
 
@@ -64,6 +75,14 @@ public class playerControl : MonoBehaviour
             currentTime = 0; 
             isInvintable = false; 
         }
+
+        if (invintableFill.IsActive())
+        {
+            invintableFill.transform.GetChild(0).gameObject.GetComponent<Image>().fillAmount = currentTime;
+        }
+
+        levelSliderFill((float)((float)breakCounter / obstacleCount));
+
     }
 
     private void FixedUpdate()
@@ -71,7 +90,7 @@ public class playerControl : MonoBehaviour
             if (collisionControl)
             {
                 rigidbody.velocity = new Vector3(0,-350*Time.fixedDeltaTime,0);
-            } 
+            }
     }
 
     private void OnCollisionEnter(Collision collision) 
@@ -86,21 +105,24 @@ public class playerControl : MonoBehaviour
         {
             if (isInvintable)
             {
+                invintableFill.transform.gameObject.SetActive(true);
                 audioSource.clip = invintableBreak;
                 audioSource.Play();
                 if (collision.gameObject.tag == "enemy" || collision.gameObject.tag == "plane")
                 {
                       collision.transform.parent.GetComponent<ObstacleController>().ShatterAllObstacles();
-                }
-                  
+                    breakCounter++;
+                }                 
             }
             else
             {
-                   if (collision.gameObject.tag == "enemy")
+                invintableFill.transform.gameObject.SetActive(false);
+                if (collision.gameObject.tag == "enemy")
                    {
                        audioSource.clip = normalBreak;
                        audioSource.Play();
                        collision.transform.parent.GetComponent<ObstacleController>().ShatterAllObstacles();
+                       breakCounter++;
 
                    }
                    else if (collision.gameObject.tag == "plane")
@@ -139,5 +161,14 @@ public class playerControl : MonoBehaviour
     public void levelTransition()
     {
         SceneManager.LoadScene(2);
+    }
+
+    public void levelSliderFill(float fillAmount)
+    {
+        fillBackground.fillAmount = fillAmount; 
+        if(fillAmount >= 1) {
+            nextLevelText.transform.parent.transform.parent.gameObject.GetComponent<Image>().color= new Color(255,76,76,255);
+        }
+
     }
 }
