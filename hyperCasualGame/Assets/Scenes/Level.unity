@@ -1259,7 +1259,6 @@ MonoBehaviour:
   - {fileID: 4443300921571106005, guid: f2f4592453b666041979e5c5985244af, type: 3}
   - {fileID: 7491820912803991582, guid: 13c675376bea900468cb73697e203899, type: 3}
   winPrefab: {fileID: 3293644397374515874, guid: de014377afc97fb458185f5869ca0bd9, type: 3}
-  addNumber: 7
   levelCounter: 1
 --- !u!4 &1395811822
 Transform:
@@ -1792,7 +1791,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.636
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
