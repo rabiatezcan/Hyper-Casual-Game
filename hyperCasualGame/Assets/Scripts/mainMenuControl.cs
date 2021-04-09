@@ -18,7 +18,7 @@ public class mainMenuControl : MonoBehaviour
             PlayerPrefs.SetInt("level",1);
         }
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(PlayerPrefs.GetInt("level"));
 
     }
     public void quitGame()
